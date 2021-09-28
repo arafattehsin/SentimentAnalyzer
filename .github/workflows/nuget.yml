@@ -1,4 +1,4 @@
-﻿name: "Deploy to NuGet on PR Merge"
+name: "Deploy to NuGet on PR Merge"
 
 on:
   pull_request:
