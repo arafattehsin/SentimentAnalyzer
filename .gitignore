@@ -1,0 +1,14 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/slnx.sqlite
+/.vs/ProjectSettings.json
+/.vs/SentimentAnalyzer/v16
+/.vs
+/SentimentAnalyzer/bin/Debug
+/SentimentAnalyzer/obj
+/SentimentAnalyzer.Tests/obj
+/SentimentAnalyzer.Tests/bin/Debug/netcoreapp3.1
+/SentimentAnalyzer/.vs/SentimentAnalyzer
+/SentimentAnalyzer/bin/Release/netstandard2.0
