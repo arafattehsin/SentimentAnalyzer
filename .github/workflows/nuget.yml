@@ -13,6 +13,10 @@ jobs:
   merge-PR:
     if: github.event.pull_request.merged == true
     runs-on: "ubuntu-latest"
+    environment: production
+    permissions:
+      id-token: write # Enable OIDC for Trusted Publishing
+      contents: read
     steps:
       - name: "Checkout"
         uses: actions/checkout@v4
@@ -31,5 +35,11 @@ jobs:
       - name: "Pack project"
         run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
 
+      - name: "NuGet login (Trusted Publishing)"
+        uses: NuGet/login@v1
+        id: nuget-login
+        with:
+          user: arafat
+
       - name: "Push package"
-        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}/*.nupkg -k ${{ secrets.NUGET_AUTH_TOKEN }} -s ${{ env.NUGET_SOURCE_URL }}
+        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}/*.nupkg --api-key ${{ steps.nuget-login.outputs.NUGET_API_KEY }} --source ${{ env.NUGET_SOURCE_URL }}
