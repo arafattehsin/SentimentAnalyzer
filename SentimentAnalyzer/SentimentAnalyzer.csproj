@@ -1,25 +1,33 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.2.3</Version>
+    <TargetFrameworks>netstandard2.0;net8.0;net10.0</TargetFrameworks>
+    <Version>2.0.0</Version>
     <Authors>Arafat Tehsin</Authors>
-    <Description>Semantic Analyzer is an on-device (offline) open-source library to find out what customers think of your brand or topic by analyzing raw text for clues about positive or negative sentiment. This library returns a sentiment probability and score along with the prediction flags (true for Positive, false for Negative). Powered by Microsoft ML.NET</Description>
-    <Copyright>Copyright © 2021</Copyright>
+    <Description>SentimentAnalyzer is an on-device (offline) open-source library to find out what customers think of your brand or topic by analyzing raw text for clues about positive or negative sentiment. This library returns a sentiment probability and score along with the prediction flags (true for Positive, false for Negative). Powered by Microsoft ML.NET 5.0. Works on .NET Standard 2.0, .NET 8, .NET 10, MAUI, Blazor, and more.</Description>
+    <Copyright>Copyright © 2026</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://www.nuget.org/packages/SentimentAnalyzer/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/arafattehsin/SentimentAnalyzer/</RepositoryUrl>
-    <RepositoryType></RepositoryType>
-    <PackageReleaseNotes>This release contains the performance improvements for the SentimentAnalyzer based upon the singleton pattern. It is based on ML.NET version 1.5.5</PackageReleaseNotes>
-    <PackageTags>Sentiment, ML.NET, Text Analytics</PackageTags>
+    <RepositoryType>git</RepositoryType>
+    <PackageReleaseNotes>Major upgrade to ML.NET 5.0.0 with multi-targeting support for .NET Standard 2.0, .NET 8, and .NET 10. Cross-platform compatible with MAUI, Blazor, Unity, and more.</PackageReleaseNotes>
+    <PackageTags>Sentiment;ML.NET;Text Analytics;NLP;Machine Learning;Offline;On-Device;Cross-Platform</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="MLModels\SentimentModel.zip" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.ML" Version="1.5.5" />
+    <PackageReference Include="Microsoft.ML" Version="5.0.0" />
   </ItemGroup>
 
 </Project>
