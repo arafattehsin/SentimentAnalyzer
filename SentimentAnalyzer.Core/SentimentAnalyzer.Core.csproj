@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>netstandard2.0;net8.0;net10.0</TargetFrameworks>
+        <Version>3.0.0</Version>
+        <Authors>Arafat Tehsin</Authors>
+        <Description>SentimentAnalyzer.Core is a lightweight, on-device (offline) sentiment analysis library using VADER (rule-based). Perfect for mobile, IoT, and edge scenarios. Add SentimentAnalyzer.Onnx for higher accuracy with transformer models.</Description>
+        <Copyright>Copyright © 2026</Copyright>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://www.nuget.org/packages/SentimentAnalyzer.Core/</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/arafattehsin/SentimentAnalyzer/</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageReleaseNotes>v3.0 introduces a modular architecture with multiple sentiment engines. Core package includes VADER (rule-based, &lt;1MB) for fast, lightweight sentiment analysis.</PackageReleaseNotes>
+        <PackageTags>Sentiment;VADER;Text Analytics;NLP;Offline;On-Device;Cross-Platform;Lightweight</PackageTags>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <LangVersion>latest</LangVersion>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>SentimentAnalyzer</RootNamespace>
+        <NoWarn>NU1701</NoWarn>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\README.md" Pack="true" PackagePath="\" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="VaderSharp2" Version="3.3.2.1" />
+    </ItemGroup>
+
+</Project>

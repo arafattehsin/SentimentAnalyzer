@@ -2,13 +2,50 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/.vs/slnx.sqlite
-/.vs/ProjectSettings.json
-/.vs/SentimentAnalyzer/v16
-/.vs
-/SentimentAnalyzer/bin/Debug
-/SentimentAnalyzer/obj
-/SentimentAnalyzer.Tests/obj
-/SentimentAnalyzer.Tests/bin/Debug/netcoreapp3.1
-/SentimentAnalyzer/.vs/SentimentAnalyzer
-/SentimentAnalyzer/bin/Release/netstandard2.0
+# Visual Studio
+/.vs/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa]rm/
+[Aa]rm64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# NuGet
+*.nupkg
+*.snupkg
+**/packages/*
+!**/packages/build/
+
+# Test results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.trx
+
+# Temporary files
+*.csx
+*.tmp
+*.temp
+QuickTest/
+
+# Model cache (for development)
+*.onnx.bak

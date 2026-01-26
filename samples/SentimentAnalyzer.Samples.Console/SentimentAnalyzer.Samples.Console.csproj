@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>SentimentAnalyzer.Samples.Console</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\SentimentAnalyzer.Core\SentimentAnalyzer.Core.csproj" />
+        <ProjectReference Include="..\..\SentimentAnalyzer.Onnx\SentimentAnalyzer.Onnx.csproj" />
+        <ProjectReference Include="..\..\SentimentAnalyzer.Onnx.Multilingual\SentimentAnalyzer.Onnx.Multilingual.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Spectre.Console" Version="0.49.1" />
+    </ItemGroup>
+
+</Project>

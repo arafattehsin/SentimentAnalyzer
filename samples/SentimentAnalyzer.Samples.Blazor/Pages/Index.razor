@@ -1,0 +1,221 @@
+@page "/"
+@using SA = global::SentimentAnalyzer
+@inject SA.SentimentAnalyzer Analyzer
+
+<PageTitle>Sentiment Analyzer - Blazor WASM Demo</PageTitle>
+
+<div class="container py-4">
+    <div class="text-center mb-4">
+        <h1 class="display-5">🎭 Sentiment Analyzer</h1>
+        <p class="lead text-muted">Fully offline sentiment analysis running in your browser via WebAssembly</p>
+        <span class="badge bg-success">🔌 No Server Required</span>
+        <span class="badge bg-info">⚡ Sub-millisecond</span>
+        <span class="badge bg-secondary">🔒 Privacy-First</span>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Engine Info -->
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="fs-4">🧠</span>
+                            <strong>Engine: @Analyzer.Name</strong>
+                        </div>
+                        <span class="badge bg-primary">WebAssembly Compatible</span>
+                    </div>
+                    <small class="text-muted d-block mt-2">
+                        ⚡ Using VADER rule-based engine (ultra-fast, &lt;1MB, WASM-compatible)
+                        <br />
+                        💡 For ML models (TinyBERT, DistilBERT), use Blazor Server or MAUI samples.
+                    </small>
+                </div>
+            </div>
+
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Analyze Text</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <textarea class="form-control" rows="4"
+                            placeholder="Type or paste text here to analyze its sentiment..." @bind="inputText"
+                            @bind:event="oninput" @onkeyup="HandleKeyUp"></textarea>
+                    </div>
+
+                    <div class="d-flex gap-2 mb-3">
+                        <button class="btn btn-primary" @onclick="AnalyzeText"
+                            disabled="@(string.IsNullOrWhiteSpace(inputText) || isAnalyzing)">
+                            @if (isAnalyzing)
+                            {
+                                <span class="spinner-border spinner-border-sm me-2"></span>
+                            }
+                            Analyze
+                        </button>
+                        <button class="btn btn-outline-secondary" @onclick="ClearText">
+                            Clear
+                        </button>
+                    </div>
+
+                    @if (result != null)
+                    {
+                        <div class="result-card @GetResultClass()">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <h4 class="mb-0">
+                                    @GetEmoji() @result.Label
+                                </h4>
+                                <span class="badge @GetBadgeClass() fs-5">
+                                    @(result.Confidence.ToString("P0"))
+                                </span>
+                            </div>
+
+                            <div class="progress mb-3" style="height: 25px;">
+                                <div class="progress-bar @GetBadgeClass()" style="width: 100%">
+                                    @result.Label @(result.Confidence.ToString("P0"))
+                                </div>
+                            </div>
+
+                            <div class="mb-2">
+                                <strong>Score:</strong> @result.Score.ToString("F3") (0 = Negative, 1 = Positive)
+                            </div>
+
+                            <small class="text-muted">
+                                ⏱️ Analysis time: @(analysisTime.TotalMilliseconds.ToString("F2"))ms
+                            </small>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="card shadow mt-4">
+                <div class="card-header">
+                    <h5 class="mb-0">📝 Try These Examples</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex flex-wrap gap-2">
+                        @foreach (var example in examples)
+                        {
+                            <button class="btn btn-outline-primary btn-sm" @onclick="() => TryExample(example)">
+                                @example
+                            </button>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow mt-4">
+                <div class="card-header">
+                    <h5 class="mb-0">ℹ️ About This Demo</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="mb-0">
+                        <li><strong>Engine:</strong> @Analyzer.Name (rule-based, optimized for WebAssembly)</li>
+                        <li><strong>Package:</strong> <code>SentimentAnalyzer.Core</code> (&lt;1 MB)</li>
+                        <li><strong>Runtime:</strong> .NET 10 Blazor WebAssembly</li>
+                        <li><strong>Data Privacy:</strong> All processing happens locally in your browser - no data is
+                            sent to any server</li>
+                        <li><strong>Offline Ready:</strong> Works without internet after initial page load</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .result-card {
+        padding: 1rem;
+        border-radius: 0.5rem;
+        border: 2px solid;
+    }
+
+    .result-positive {
+        background-color: #d4edda;
+        border-color: #28a745;
+    }
+
+    .result-negative {
+        background-color: #f8d7da;
+        border-color: #dc3545;
+    }
+
+    .result-neutral {
+        background-color: #fff3cd;
+        border-color: #ffc107;
+    }
+</style>
+
+@code {
+    private string inputText = "";
+    private SA.SentimentResult? result;
+    private TimeSpan analysisTime;
+    private bool isAnalyzing;
+
+    private string[] examples = new[]
+    {
+"I absolutely love this product!",
+"This is the worst experience ever.",
+"The weather is nice today.",
+"I'm not sure how I feel about this.",
+"Outstanding customer service!",
+"Terrible quality, total waste of money."
+};
+
+    private void AnalyzeText()
+    {
+        if (string.IsNullOrWhiteSpace(inputText))
+            return;
+
+        isAnalyzing = true;
+        StateHasChanged();
+
+        var sw = System.Diagnostics.Stopwatch.StartNew();
+        result = Analyzer.Analyze(inputText);
+        sw.Stop();
+        analysisTime = sw.Elapsed;
+
+        isAnalyzing = false;
+    }
+
+    private void HandleKeyUp(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter" && e.CtrlKey)
+        {
+            AnalyzeText();
+        }
+    }
+
+    private void ClearText()
+    {
+        inputText = "";
+        result = null;
+    }
+
+    private void TryExample(string example)
+    {
+        inputText = example;
+        AnalyzeText();
+    }
+
+    private string GetEmoji() => result?.Label switch
+    {
+        SA.SentimentLabel.Positive => "😊",
+        SA.SentimentLabel.Negative => "😞",
+        _ => "😐"
+    };
+
+    private string GetResultClass() => result?.Label switch
+    {
+        SA.SentimentLabel.Positive => "result-positive",
+        SA.SentimentLabel.Negative => "result-negative",
+        _ => "result-neutral"
+    };
+
+    private string GetBadgeClass() => result?.Label switch
+    {
+        SA.SentimentLabel.Positive => "bg-success",
+        SA.SentimentLabel.Negative => "bg-danger",
+        _ => "bg-warning text-dark"
+    };
+}

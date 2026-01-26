@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>netstandard2.0;net8.0;net10.0</TargetFrameworks>
+        <Version>3.0.0</Version>
+        <Authors>Arafat Tehsin</Authors>
+        <Description>Lightweight transformer-based sentiment analysis using TinyBERT (~18MB). 94.2% accuracy on Amazon reviews. Fully offline with embedded model. English-only, binary classification (positive/negative). For multilingual support, use SentimentAnalyzer.Onnx.Multilingual.</Description>
+        <Copyright>Copyright © 2026</Copyright>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://www.nuget.org/packages/SentimentAnalyzer.Onnx/</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/arafattehsin/SentimentAnalyzer/</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageReleaseNotes>v3.0 introduces TinyBERT sentiment model - 7.5x smaller and 9.4x faster than BERT. Fully embedded for true offline use.</PackageReleaseNotes>
+        <PackageTags>Sentiment;ONNX;TinyBERT;Transformer;NLP;Lightweight;Machine Learning;Offline</PackageTags>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <LangVersion>latest</LangVersion>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>SentimentAnalyzer.Onnx</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\README.md" Pack="true" PackagePath="\" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\SentimentAnalyzer.Core\SentimentAnalyzer.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.20.1" />
+    </ItemGroup>
+
+    <!-- TinyBERT model is embedded for true offline use -->
+    <ItemGroup>
+        <EmbeddedResource Include="Models\tinybert-sentiment.onnx" LogicalName="tinybert-sentiment.onnx" />
+        <EmbeddedResource Include="Models\vocab.txt" LogicalName="vocab.txt" />
+    </ItemGroup>
+
+</Project>
