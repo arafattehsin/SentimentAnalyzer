@@ -8,22 +8,13 @@
 
 A cross-platform, privacy-first library for sentiment analysis that runs entirely on-device without requiring internet connectivity.
 
-## 📦 Package Family (v3.0+)
-
-| Package                                 | Size   | Engine                   | Languages     | Best For                         |
-| --------------------------------------- | ------ | ------------------------ | ------------- | -------------------------------- |
-| **SentimentAnalyzer.Core**              | <1MB   | VADER (rule-based)       | English       | Mobile, IoT, speed-critical apps |
-| **SentimentAnalyzer.Onnx**              | ~18MB  | TinyBERT (transformer)   | English       | High accuracy, embedded model    |
-| **SentimentAnalyzer.Onnx.Multilingual** | ~541MB | DistilBERT (transformer) | 104 languages | Multilingual, highest accuracy   |
-| **SentimentAnalyzer**                   | ~15MB  | ML.NET (traditional ML)  | English       | Backward compatibility           |
-
 ## ✨ Features
 
 - 🔒 **Privacy-first** - All processing happens on-device
 - 📴 **Fully offline** - No internet connection required
 - 🚀 **Cross-platform** - .NET Standard 2.0, .NET 8, .NET 10, MAUI, Blazor
 - ⚡ **Multiple engines** - Choose between speed, accuracy, or both
-- 🌍 **Multilingual** - ONNX Multilingual package supports 104 languages
+- 🌍 **Multilingual** - Support for 104 languages
 
 ---
 
@@ -111,7 +102,50 @@ Console.WriteLine($"Positive: {result.Prediction}");  // true
 
 ---
 
-## 📖 API Reference
+## � Choosing the Right Package
+
+### Package Comparison
+
+| Package                                 | Size   | Engine                   | Languages     | Accuracy | Speed      | Best For                         |
+| --------------------------------------- | ------ | ------------------------ | ------------- | -------- | ---------- | -------------------------------- |
+| **SentimentAnalyzer.Core**              | <1MB   | VADER (rule-based)       | English       | ~80%     | ⚡⚡⚡⚡⚡ | Mobile, IoT, speed-critical apps |
+| **SentimentAnalyzer.Onnx**              | ~18MB  | TinyBERT (transformer)   | English       | ~94%     | ⚡⚡⚡⚡   | High accuracy, embedded model    |
+| **SentimentAnalyzer.Onnx.Multilingual** | ~541MB | DistilBERT (transformer) | 104 languages | ~83%     | ⚡⚡⚡     | Multilingual, highest accuracy   |
+| **SentimentAnalyzer**                   | ~15MB  | ML.NET (traditional ML)  | English       | ~85%     | ⚡⚡⚡⚡   | Backward compatibility           |
+
+_Speed ratings: ⚡⚡⚡⚡⚡ (fastest) to ⚡ (slowest)_
+
+### Platform Support
+
+| Platform          | Core | Onnx (TinyBERT) | Onnx.Multilingual | Legacy |
+| ----------------- | ---- | --------------- | ----------------- | ------ |
+| .NET Standard 2.0 | ✅   | ✅              | ✅                | ✅     |
+| .NET 8 (LTS)      | ✅   | ✅              | ✅                | ✅     |
+| .NET 10 (LTS)     | ✅   | ✅              | ✅                | ✅     |
+| .NET MAUI         | ✅   | ✅              | ✅                | ✅     |
+| Blazor WASM       | ✅   | ❌              | ❌                | ✅     |
+| Blazor Server     | ✅   | ✅              | ✅                | ✅     |
+| Unity             | ✅   | ⚠️              | ❌                | ✅     |
+
+> **Note**: ONNX models require native C++ libraries and cannot run in Blazor WebAssembly. Use Core (VADER) for WASM or Blazor Server for ML models.
+
+### Use Cases
+
+| Use Case                     | Recommended Package                                  |
+| ---------------------------- | ---------------------------------------------------- |
+| Mobile apps (MAUI, Xamarin)  | Core (VADER) or Onnx (TinyBERT)                      |
+| IoT/Edge devices             | Core (VADER)                                         |
+| Blazor WebAssembly           | Core (VADER)                                         |
+| Speed-critical applications  | Core (VADER)                                         |
+| High accuracy (English)      | Onnx (TinyBERT)                                      |
+| Multilingual support         | Onnx.Multilingual (DistilBERT)                       |
+| Social media analysis        | Core (VADER - optimized for social text with emojis) |
+| Customer reviews             | Onnx (TinyBERT) or Onnx.Multilingual                 |
+| Enterprise/existing apps     | Legacy (ML.NET)                                      |
+
+---
+
+## �📖 API Reference
 
 ### Core Package
 
@@ -170,64 +204,6 @@ foreach (var result in results)
     Console.WriteLine($"{result.Label}: {result.Text}");
 }
 ```
-
----
-
-## 🎯 Platform Support
-
-| Platform          | Core | Onnx (TinyBERT) | Onnx.Multilingual | Legacy |
-| ----------------- | ---- | --------------- | ----------------- | ------ |
-| .NET Standard 2.0 | ✅   | ✅              | ✅                | ✅     |
-| .NET 8 (LTS)      | ✅   | ✅              | ✅                | ✅     |
-| .NET 10 (LTS)     | ✅   | ✅              | ✅                | ✅     |
-| .NET MAUI         | ✅   | ✅              | ✅                | ✅     |
-| Blazor WASM       | ✅   | ❌ (native)     | ❌ (native+size)  | ✅     |
-| Blazor Server     | ✅   | ✅              | ✅                | ✅     |
-| Unity             | ✅   | ⚠️              | ❌                | ✅     |
-
-> **Note**: ❌ means not compatible. ONNX models (TinyBERT, DistilBERT) require native C++ libraries that cannot run in Blazor WebAssembly. Use Blazor Server for ML models. ⚠️ means possible with caveats.
-
----
-
-## 🔄 Migration from v2.x
-
-### If using `Sentiments.Predict()`:
-
-No changes needed! The legacy API continues to work:
-
-```xml
-<PackageReference Include="SentimentAnalyzer" Version="3.0.0" />
-```
-
-### To use new VADER engine (smaller, faster):
-
-```csharp
-// Before (ML.NET, ~15MB)
-var result = Sentiments.Predict("I love this!");
-
-// After (VADER, <1MB)
-var analyzer = new SentimentAnalyzer();
-var result = analyzer.Analyze("I love this!");
-
-// Result now has more properties:
-// result.Label (enum), result.Confidence, result.IsPositive, etc.
-```
-
----
-
-## 📋 Use Cases
-
-| Use Case                     | Recommended Package                                  |
-| ---------------------------- | ---------------------------------------------------- |
-| Mobile apps (MAUI, Xamarin)  | Core (VADER) or Onnx (TinyBERT)                      |
-| IoT/Edge devices             | Core (VADER)                                         |
-| Speed-critical applications  | Core (VADER)                                         |
-| Multilingual support         | Onnx.Multilingual (DistilBERT)                       |
-| High accuracy (English)      | Onnx (TinyBERT)                                      |
-| High accuracy (Any language) | Onnx.Multilingual (DistilBERT)                       |
-| Enterprise/existing apps     | Legacy (ML.NET)                                      |
-| Social media analysis        | Core (VADER - optimized for social text with emojis) |
-| Customer reviews             | Onnx (TinyBERT) or Onnx.Multilingual                 |
 
 ---
 
@@ -313,3 +289,43 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 | ML.NET (Legacy) | SentimentAnalyzer | ~85%     | ⚡⚡⚡⚡   | ~15MB  | English   |
 
 _Speed ratings: ⚡⚡⚡⚡⚡ (fastest) to ⚡ (slowest). Accuracy tested on various datasets._
+� Migration from v2.x
+
+### If using `Sentiments.Predict()`:
+
+No changes needed! The legacy API continues to work:
+
+```xml
+<PackageReference Include="SentimentAnalyzer" Version="3.0.0" />
+```
+
+### To use new engines (smaller, faster, or more accurate):
+
+```csharp
+// Before (ML.NET, ~15MB)
+var result = Sentiments.Predict("I love this!");
+
+// After (VADER, <1MB - fastest)
+var analyzer = new SentimentAnalyzer();
+var result = analyzer.Analyze("I love this!");
+
+// Result now has more properties:
+// result.Label (enum), result.Confidence, result.IsPositive, etc.
+```
+
+---
+
+## 📚 Learn More
+
+- [Blog Post: On-device Machine Learning with SentimentAnalyzer](https://www.arafattehsin.com/blog/sentimentanalyzer-ondevice-machine-learning/)
+- [Sample Applications](./samples/) - Console, Blazor, MAUI examples
+- [CHANGELOG](CHANGELOG.md) - Version history and migration guides
+- [GitHub Releases](https://github.com/arafattehsin/SentimentAnalyzer/releases) - Model downloads
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
