@@ -3,6 +3,7 @@ name: "Deploy to NuGet on PR Merge"
 on:
   pull_request:
     types: [closed]
+  workflow_dispatch:
 
 env:
   PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}/output
