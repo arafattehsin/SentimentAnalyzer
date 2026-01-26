@@ -25,24 +25,31 @@ jobs:
         with:
           dotnet-version: "10.0.x"
 
-      - name: "Restore solution"
-        run: dotnet restore
+      # Build only the library projects (not samples which require MAUI workloads)
+      - name: "Build SentimentAnalyzer (legacy)"
+        run: dotnet build SentimentAnalyzer/SentimentAnalyzer.csproj --configuration Release
 
-      - name: "Build solution"
-        run: dotnet build --no-restore --configuration Release
+      - name: "Build SentimentAnalyzer.Core"
+        run: dotnet build SentimentAnalyzer.Core/SentimentAnalyzer.Core.csproj --configuration Release
+
+      - name: "Build SentimentAnalyzer.Onnx"
+        run: dotnet build SentimentAnalyzer.Onnx/SentimentAnalyzer.Onnx.csproj --configuration Release
+
+      - name: "Build SentimentAnalyzer.Onnx.Multilingual"
+        run: dotnet build SentimentAnalyzer.Onnx.Multilingual/SentimentAnalyzer.Onnx.Multilingual.csproj --configuration Release
 
       # Pack all four NuGet packages
       - name: "Pack SentimentAnalyzer (legacy)"
-        run: dotnet pack SentimentAnalyzer/SentimentAnalyzer.csproj --no-restore --no-build --configuration Release --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+        run: dotnet pack SentimentAnalyzer/SentimentAnalyzer.csproj --no-build --configuration Release --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
 
       - name: "Pack SentimentAnalyzer.Core"
-        run: dotnet pack SentimentAnalyzer.Core/SentimentAnalyzer.Core.csproj --no-restore --no-build --configuration Release --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+        run: dotnet pack SentimentAnalyzer.Core/SentimentAnalyzer.Core.csproj --no-build --configuration Release --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
 
       - name: "Pack SentimentAnalyzer.Onnx"
-        run: dotnet pack SentimentAnalyzer.Onnx/SentimentAnalyzer.Onnx.csproj --no-restore --no-build --configuration Release --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+        run: dotnet pack SentimentAnalyzer.Onnx/SentimentAnalyzer.Onnx.csproj --no-build --configuration Release --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
 
       - name: "Pack SentimentAnalyzer.Onnx.Multilingual"
-        run: dotnet pack SentimentAnalyzer.Onnx.Multilingual/SentimentAnalyzer.Onnx.Multilingual.csproj --no-restore --no-build --configuration Release --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+        run: dotnet pack SentimentAnalyzer.Onnx.Multilingual/SentimentAnalyzer.Onnx.Multilingual.csproj --no-build --configuration Release --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
 
       - name: "List packages"
         run: ls -la ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
