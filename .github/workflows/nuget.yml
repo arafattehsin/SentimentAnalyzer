@@ -31,7 +31,10 @@ jobs:
       - name: "Build solution"
         run: dotnet build --no-restore --configuration Release
 
-      # Pack all three NuGet packages
+      # Pack all four NuGet packages
+      - name: "Pack SentimentAnalyzer (legacy)"
+        run: dotnet pack SentimentAnalyzer/SentimentAnalyzer.csproj --no-restore --no-build --configuration Release --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+
       - name: "Pack SentimentAnalyzer.Core"
         run: dotnet pack SentimentAnalyzer.Core/SentimentAnalyzer.Core.csproj --no-restore --no-build --configuration Release --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
 
