@@ -1,4 +1,5 @@
 using System;
+using SentimentAnalyzer;
 
 namespace SentimentAnalyzer.Onnx.Multilingual
 {

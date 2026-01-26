@@ -59,8 +59,6 @@ Console.WriteLine($"Sentiment: {result.Label}");  // Positive
 Console.WriteLine($"Confidence: {result.Confidence:P0}");  // 99%
 ```
 
-D
-
 ### Option C: Multilingual (DistilBERT) - 104 Languages
 
 ```bash
@@ -72,9 +70,9 @@ dotnet add package SentimentAnalyzer.Onnx.Multilingual
 using SentimentAnalyzer;
 using SentimentAnalyzer.Onnx.Multilingual;
 
-// Use DistilBERT for multilingual support (downloads ~541MB model on first use)
+// Use DistilBERT for multilingual support (downloads ~270MB model on first use)
 var analyzer = SentimentAnalyzer.CreateBuilder()
-    .UseDistilBertMultilingual()
+    .UseDistilBert()
     .Build();
 
 // Supports 104 languages!
@@ -84,7 +82,7 @@ Console.WriteLine($"Sentiment: {result.Label}");  // Positive
 // Also works with: Arabic, Chinese, German, Spanish, Hindi, Japanese, etc.
 ```
 
-> **📥 Note on DistilBERT Multilingual**: The ~541MB model is automatically downloaded from GitHub Releases on first use and cached locally at `%LOCALAPPDATA%\SentimentAnalyzer\models\`. Subsequent uses are fully offline. [See full list of 104 supported languages](https://github.com/google-research/bert/blob/master/multilingual.md#list-of-languages).
+> **📥 Note on DistilBERT Multilingual**: The ~270MB model is automatically downloaded from GitHub Releases on first use and cached locally at `%LOCALAPPDATA%\SentimentAnalyzer\models\`. Subsequent uses are fully offline. [See full list of 104 supported languages](https://github.com/google-research/bert/blob/master/multilingual.md#list-of-languages).
 
 ### Option D: Legacy API (Backward Compatible)
 
@@ -131,17 +129,17 @@ _Speed ratings: ⚡⚡⚡⚡⚡ (fastest) to ⚡ (slowest)_
 
 ### Use Cases
 
-| Use Case                     | Recommended Package                                  |
-| ---------------------------- | ---------------------------------------------------- |
-| Mobile apps (MAUI, Xamarin)  | Core (VADER) or Onnx (TinyBERT)                      |
-| IoT/Edge devices             | Core (VADER)                                         |
-| Blazor WebAssembly           | Core (VADER)                                         |
-| Speed-critical applications  | Core (VADER)                                         |
-| High accuracy (English)      | Onnx (TinyBERT)                                      |
-| Multilingual support         | Onnx.Multilingual (DistilBERT)                       |
-| Social media analysis        | Core (VADER - optimized for social text with emojis) |
-| Customer reviews             | Onnx (TinyBERT) or Onnx.Multilingual                 |
-| Enterprise/existing apps     | Legacy (ML.NET)                                      |
+| Use Case                    | Recommended Package                                  |
+| --------------------------- | ---------------------------------------------------- |
+| Mobile apps (MAUI, Xamarin) | Core (VADER) or Onnx (TinyBERT)                      |
+| IoT/Edge devices            | Core (VADER)                                         |
+| Blazor WebAssembly          | Core (VADER)                                         |
+| Speed-critical applications | Core (VADER)                                         |
+| High accuracy (English)     | Onnx (TinyBERT)                                      |
+| Multilingual support        | Onnx.Multilingual (DistilBERT)                       |
+| Social media analysis       | Core (VADER - optimized for social text with emojis) |
+| Customer reviews            | Onnx (TinyBERT) or Onnx.Multilingual                 |
+| Enterprise/existing apps    | Legacy (ML.NET)                                      |
 
 ---
 

@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using SentimentAnalyzer;
 using SA = global::SentimentAnalyzer;
 
 namespace SentimentAnalyzer.Samples.Maui;

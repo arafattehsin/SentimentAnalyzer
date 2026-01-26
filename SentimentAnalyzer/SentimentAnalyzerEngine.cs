@@ -9,7 +9,7 @@ namespace SentimentAnalyzer
 {
     /// <summary>
     /// Modern sentiment analyzer with configurable options and enhanced results.
-    /// Provides thread-safe, on-device sentiment analysis powered by ML.NET.
+    /// Note: This engine is NOT thread-safe. Create separate instances for concurrent use.
     /// </summary>
     public sealed class SentimentAnalyzerEngine : IDisposable
     {
