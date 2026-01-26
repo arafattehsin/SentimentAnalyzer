@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SentimentAnalyzer.Samples.Maui"
+             x:Class="SentimentAnalyzer.Samples.Maui.MainPage"
+             Title="Sentiment Analyzer"
+             BackgroundColor="{DynamicResource PageBackgroundColor}">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="20"
+                             Padding="20">
+
+            <!-- Header -->
+            <Label Text="🎭 Sentiment Analyzer"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="{DynamicResource PrimaryColor}"/>
+
+            <Label Text="On-device AI • Fully Offline • Privacy-First"
+                   FontSize="14"
+                   HorizontalOptions="Center"
+                   TextColor="{DynamicResource TextSecondaryColor}"/>
+
+            <!-- Engine Selector -->
+            <Frame BackgroundColor="{DynamicResource CardBackgroundColor}"
+                   CornerRadius="10"
+                   Padding="15"
+                   HasShadow="True">
+                <VerticalStackLayout Spacing="10">
+                    <HorizontalStackLayout Spacing="10"
+                                           HorizontalOptions="Center">
+                        <Label Text="🧠"
+                               FontSize="20"
+                               VerticalOptions="Center"/>
+                        <Label Text="AI Engine:"
+                               FontSize="14"
+                               VerticalOptions="Center"
+                               FontAttributes="Bold"
+                               TextColor="{DynamicResource TextColor}"/>
+                    </HorizontalStackLayout>
+                    <Picker ItemsSource="{Binding AvailableEngines}"
+                            SelectedItem="{Binding SelectedEngine}"
+                            Title="Select Engine"
+                            HorizontalOptions="Center"
+                            WidthRequest="200"
+                            FontSize="16"
+                            TextColor="{DynamicResource TextColor}"
+                            TitleColor="{DynamicResource TextSecondaryColor}"/>
+                    <Label Text="{Binding EngineName}"
+                           FontSize="12"
+                           HorizontalOptions="Center"
+                           TextColor="{DynamicResource TextSecondaryColor}"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Loading Indicator -->
+            <Frame BackgroundColor="{DynamicResource CardBackgroundColor}"
+                   CornerRadius="10"
+                   Padding="15"
+                   HasShadow="True"
+                   IsVisible="{Binding IsLoading}">
+                <VerticalStackLayout Spacing="10">
+                    <HorizontalStackLayout Spacing="10"
+                                           HorizontalOptions="Center">
+                        <ActivityIndicator IsRunning="{Binding IsLoading}"
+                                           Color="{DynamicResource PrimaryColor}"/>
+                        <Label Text="{Binding LoadingText}"
+                               FontSize="14"
+                               VerticalOptions="Center"
+                               TextColor="{DynamicResource TextColor}"/>
+                    </HorizontalStackLayout>
+                    <!-- Download Progress Bar -->
+                    <ProgressBar Progress="{Binding DownloadProgress}"
+                                 ProgressColor="{DynamicResource PrimaryColor}"
+                                 IsVisible="{Binding IsDownloading}"
+                                 HeightRequest="8"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Error Message -->
+            <Frame BackgroundColor="#f8d7da"
+                   CornerRadius="10"
+                   Padding="10"
+                   IsVisible="{Binding HasError}">
+                <Label Text="{Binding ErrorText}"
+                       FontSize="14"
+                       TextColor="#721c24"
+                       HorizontalOptions="Center"/>
+            </Frame>
+
+            <!-- Input -->
+            <Frame BackgroundColor="{DynamicResource CardBackgroundColor}"
+                   CornerRadius="10"
+                   Padding="15"
+                   HasShadow="True">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Enter text to analyze:"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="{DynamicResource TextColor}"/>
+                    <Editor Text="{Binding InputText}"
+                            Placeholder="Type or paste text here..."
+                            HeightRequest="120"
+                            FontSize="16"
+                            BackgroundColor="{DynamicResource EditorBackgroundColor}"
+                            TextColor="{DynamicResource TextColor}"
+                            PlaceholderColor="{DynamicResource TextSecondaryColor}"/>
+
+                    <Grid ColumnDefinitions="*,*"
+                          ColumnSpacing="10">
+                        <Button Text="Analyze"
+                                Command="{Binding AnalyzeCommand}"
+                                BackgroundColor="{DynamicResource PrimaryColor}"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                Grid.Column="0"/>
+                        <Button Text="Clear"
+                                Command="{Binding ClearCommand}"
+                                BackgroundColor="{DynamicResource EditorBackgroundColor}"
+                                TextColor="{DynamicResource TextSecondaryColor}"
+                                Grid.Column="1"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Results -->
+            <Frame BackgroundColor="{Binding ResultBackgroundColor}"
+                   CornerRadius="10"
+                   Padding="20"
+                   HasShadow="True"
+                   IsVisible="{Binding HasResult}">
+                <VerticalStackLayout Spacing="15">
+
+                    <!-- Main Result -->
+                    <HorizontalStackLayout HorizontalOptions="Center"
+                                           Spacing="10">
+                        <Label Text="{Binding ResultEmoji}"
+                               FontSize="48"
+                               VerticalOptions="Center"/>
+                        <VerticalStackLayout VerticalOptions="Center">
+                            <Label Text="{Binding ResultLabel}"
+                                   FontSize="24"
+                                   FontAttributes="Bold"
+                                   TextColor="{DynamicResource TextColor}"/>
+                            <Label Text="{Binding ConfidenceText}"
+                                   FontSize="16"
+                                   TextColor="{DynamicResource TextSecondaryColor}"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+
+                    <!-- Score Display -->
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="{Binding ScoreText}"
+                               FontSize="14"
+                               HorizontalOptions="Center"
+                               TextColor="{DynamicResource TextColor}"/>
+                        <ProgressBar Progress="{Binding Score}"
+                                     ProgressColor="{DynamicResource PrimaryColor}"
+                                     HeightRequest="10"/>
+                        <Label Text="0 = Negative ← → Positive = 1"
+                               FontSize="12"
+                               TextColor="{DynamicResource TextSecondaryColor}"
+                               HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+
+                    <!-- Timing -->
+                    <Label Text="{Binding TimingText}"
+                           FontSize="12"
+                           TextColor="{DynamicResource TextSecondaryColor}"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Quick Examples -->
+            <Frame BackgroundColor="{DynamicResource CardBackgroundColor}"
+                   CornerRadius="10"
+                   Padding="15"
+                   HasShadow="True">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Quick Examples"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="{DynamicResource TextColor}"/>
+                    <FlexLayout Wrap="Wrap"
+                                JustifyContent="Start"
+                                Direction="Row">
+                        <Button Text="😊 Love it!"
+                                Command="{Binding TryExampleCommand}"
+                                CommandParameter="I absolutely love this product! It's amazing!"
+                                Margin="3"
+                                FontSize="12"
+                                Padding="10,5"
+                                BackgroundColor="{DynamicResource PositiveColor}"
+                                TextColor="White"/>
+                        <Button Text="😞 Hate it"
+                                Command="{Binding TryExampleCommand}"
+                                CommandParameter="This is terrible. Worst purchase ever."
+                                Margin="3"
+                                FontSize="12"
+                                Padding="10,5"
+                                BackgroundColor="{DynamicResource NegativeColor}"
+                                TextColor="White"/>
+                        <Button Text="😐 Meh"
+                                Command="{Binding TryExampleCommand}"
+                                CommandParameter="It's okay I guess. Nothing special."
+                                Margin="3"
+                                FontSize="12"
+                                Padding="10,5"
+                                BackgroundColor="{DynamicResource NeutralColor}"
+                                TextColor="Black"/>
+                        <Button Text="⭐ Review"
+                                Command="{Binding TryExampleCommand}"
+                                CommandParameter="Great customer service and fast delivery. Would recommend!"
+                                Margin="3"
+                                FontSize="12"
+                                Padding="10,5"
+                                BackgroundColor="{DynamicResource PrimaryColorLight}"
+                                TextColor="White"/>
+                    </FlexLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Info -->
+            <Label Text="✅ All processing happens on-device. Your data never leaves this device."
+                   FontSize="12"
+                   TextColor="{DynamicResource TextSecondaryColor}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

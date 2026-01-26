@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>netstandard2.0;net8.0;net10.0</TargetFrameworks>
+        <Version>3.0.0</Version>
+        <Authors>Arafat Tehsin</Authors>
+        <Description>High-accuracy multilingual sentiment analysis using DistilBERT transformer. Supports 104 languages with 3-class classification (positive/neutral/negative). NOTE: The ~270MB model is downloaded on first use and cached locally for offline use. Requires SentimentAnalyzer.Core.</Description>
+        <Copyright>Copyright © 2026</Copyright>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://www.nuget.org/packages/SentimentAnalyzer.Onnx.Multilingual/</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/arafattehsin/SentimentAnalyzer/</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageReleaseNotes>v3.0 introduces DistilBERT multilingual sentiment model via ONNX Runtime. Supports 104 languages with ~83% accuracy. Model is downloaded on first use (~270MB) and cached for offline use.</PackageReleaseNotes>
+        <PackageTags>Sentiment;ONNX;DistilBERT;Transformer;NLP;Multilingual;Machine Learning;Deep Learning</PackageTags>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <LangVersion>latest</LangVersion>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <RootNamespace>SentimentAnalyzer.Onnx.Multilingual</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\README.md" Pack="true" PackagePath="\" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\SentimentAnalyzer.Core\SentimentAnalyzer.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.20.1" />
+    </ItemGroup>
+
+</Project>

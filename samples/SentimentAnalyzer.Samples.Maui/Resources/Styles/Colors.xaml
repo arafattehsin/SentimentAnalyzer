@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Primary Colors -->
+    <Color x:Key="PrimaryColor">#512BD4</Color>
+    <Color x:Key="PrimaryColorLight">#7C4DFF</Color>
+    <Color x:Key="SecondaryColor">#DFD8F7</Color>
+    <Color x:Key="TertiaryColor">#2B0B98</Color>
+
+    <!-- Light Theme -->
+    <Color x:Key="PageBackgroundColorLight">#F5F5F5</Color>
+    <Color x:Key="CardBackgroundColorLight">White</Color>
+    <Color x:Key="TextColorLight">#1F1F1F</Color>
+    <Color x:Key="TextSecondaryColorLight">#6B6B6B</Color>
+    <Color x:Key="EditorBackgroundColorLight">#FAFAFA</Color>
+    <Color x:Key="EditorBorderColorLight">#E0E0E0</Color>
+
+    <!-- Dark Theme -->
+    <Color x:Key="PageBackgroundColorDark">#121212</Color>
+    <Color x:Key="CardBackgroundColorDark">#1E1E1E</Color>
+    <Color x:Key="TextColorDark">#FFFFFF</Color>
+    <Color x:Key="TextSecondaryColorDark">#B0B0B0</Color>
+    <Color x:Key="EditorBackgroundColorDark">#2A2A2A</Color>
+    <Color x:Key="EditorBorderColorDark">#404040</Color>
+
+    <!-- Semantic Colors -->
+    <Color x:Key="PositiveColor">#28a745</Color>
+    <Color x:Key="PositiveColorDark">#4CAF50</Color>
+    <Color x:Key="NeutralColor">#ffc107</Color>
+    <Color x:Key="NeutralColorDark">#FFD54F</Color>
+    <Color x:Key="NegativeColor">#dc3545</Color>
+    <Color x:Key="NegativeColorDark">#EF5350</Color>
+
+    <!-- Result Background Colors (Light) -->
+    <Color x:Key="PositiveBackgroundLight">#d4edda</Color>
+    <Color x:Key="NeutralBackgroundLight">#fff3cd</Color>
+    <Color x:Key="NegativeBackgroundLight">#f8d7da</Color>
+
+    <!-- Result Background Colors (Dark) -->
+    <Color x:Key="PositiveBackgroundDark">#1B3D2F</Color>
+    <Color x:Key="NeutralBackgroundDark">#3D3520</Color>
+    <Color x:Key="NegativeBackgroundDark">#3D1F22</Color>
+
+    <!-- Dynamic Theme Colors (default to light, app will switch) -->
+    <Color x:Key="PageBackgroundColor">#F5F5F5</Color>
+    <Color x:Key="CardBackgroundColor">White</Color>
+    <Color x:Key="TextColor">#1F1F1F</Color>
+    <Color x:Key="TextSecondaryColor">#6B6B6B</Color>
+    <Color x:Key="EditorBackgroundColor">#FAFAFA</Color>
+    <Color x:Key="EditorBorderColor">#E0E0E0</Color>
+
+</ResourceDictionary>

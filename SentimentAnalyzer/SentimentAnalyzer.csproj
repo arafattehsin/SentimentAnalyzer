@@ -2,15 +2,15 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net8.0;net10.0</TargetFrameworks>
-    <Version>2.0.0</Version>
+    <Version>3.0.0</Version>
     <Authors>Arafat Tehsin</Authors>
-    <Description>SentimentAnalyzer is an on-device (offline) open-source library to find out what customers think of your brand or topic by analyzing raw text for clues about positive or negative sentiment. This library returns a sentiment probability and score along with the prediction flags (true for Positive, false for Negative). Powered by Microsoft ML.NET 5.0. Works on .NET Standard 2.0, .NET 8, .NET 10, MAUI, Blazor, and more.</Description>
+    <Description>SentimentAnalyzer is an on-device (offline) open-source library for sentiment analysis using ML.NET. For a lightweight alternative using VADER (rule-based), see SentimentAnalyzer.Core. For high-accuracy transformer models, see SentimentAnalyzer.Onnx.</Description>
     <Copyright>Copyright © 2026</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://www.nuget.org/packages/SentimentAnalyzer/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/arafattehsin/SentimentAnalyzer/</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>Major upgrade to ML.NET 5.0.0 with multi-targeting support for .NET Standard 2.0, .NET 8, and .NET 10. Cross-platform compatible with MAUI, Blazor, Unity, and more.</PackageReleaseNotes>
+    <PackageReleaseNotes>v3.0 introduces a modular package family. This package (ML.NET) continues to work for existing users. New packages: SentimentAnalyzer.Core (VADER, lightweight) and SentimentAnalyzer.Onnx (transformers, accurate).</PackageReleaseNotes>
     <PackageTags>Sentiment;ML.NET;Text Analytics;NLP;Machine Learning;Offline;On-Device;Cross-Platform</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <LangVersion>latest</LangVersion>
