@@ -5,7 +5,6 @@ on:
     types: [closed]
 
 env:
-  PROJECT_PATH: "SentimentAnalyzer/SentimentAnalyzer.csproj"
   PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}/output
   NUGET_SOURCE_URL: "https://api.nuget.org/v3/index.json"
 
@@ -26,14 +25,24 @@ jobs:
         with:
           dotnet-version: "10.0.x"
 
-      - name: "Restore packages"
-        run: dotnet restore ${{ env.PROJECT_PATH }}
+      - name: "Restore solution"
+        run: dotnet restore
 
-      - name: "Build project"
-        run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release
+      - name: "Build solution"
+        run: dotnet build --no-restore --configuration Release
 
-      - name: "Pack project"
-        run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+      # Pack all three NuGet packages
+      - name: "Pack SentimentAnalyzer.Core"
+        run: dotnet pack SentimentAnalyzer.Core/SentimentAnalyzer.Core.csproj --no-restore --no-build --configuration Release --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+
+      - name: "Pack SentimentAnalyzer.Onnx"
+        run: dotnet pack SentimentAnalyzer.Onnx/SentimentAnalyzer.Onnx.csproj --no-restore --no-build --configuration Release --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+
+      - name: "Pack SentimentAnalyzer.Onnx.Multilingual"
+        run: dotnet pack SentimentAnalyzer.Onnx.Multilingual/SentimentAnalyzer.Onnx.Multilingual.csproj --no-restore --no-build --configuration Release --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+
+      - name: "List packages"
+        run: ls -la ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
 
       - name: "NuGet login (Trusted Publishing)"
         uses: NuGet/login@v1
@@ -41,5 +50,6 @@ jobs:
         with:
           user: arafat
 
-      - name: "Push package"
+      # Push all packages (*.nupkg will match all three)
+      - name: "Push packages"
         run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}/*.nupkg --api-key ${{ steps.nuget-login.outputs.NUGET_API_KEY }} --source ${{ env.NUGET_SOURCE_URL }}
