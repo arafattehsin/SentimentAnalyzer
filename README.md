@@ -261,23 +261,6 @@ var analyzer = await SentimentAnalyzer.CreateBuilder()
 
 ---
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📚 Learn More
-
-- [Blog Post: SentimentAnalyzer v3.0 Modernization](https://arafattehsin.com/blog/sentiment-analyzer-modernization)
-- [Blog Post: On-device Machine Learning with SentimentAnalyzer](https://www.arafattehsin.com/blog/sentimentanalyzer-ondevice-machine-learning/)
-- [CHANGELOG](CHANGELOG.md) for version history
-- [GitHub Releases](https://github.com/arafattehsin/SentimentAnalyzer/releases) for model downloads
-
----
-
 ## ⚡ Performance Comparison
 
 | Engine          | Package           | Accuracy | Speed      | Size   | Languages |
