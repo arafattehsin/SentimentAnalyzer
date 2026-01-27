@@ -271,6 +271,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📚 Learn More
 
+- [Blog Post: SentimentAnalyzer v3.0 Modernization](https://arafattehsin.com/blog/sentiment-analyzer-modernization)
 - [Blog Post: On-device Machine Learning with SentimentAnalyzer](https://www.arafattehsin.com/blog/sentimentanalyzer-ondevice-machine-learning/)
 - [CHANGELOG](CHANGELOG.md) for version history
 - [GitHub Releases](https://github.com/arafattehsin/SentimentAnalyzer/releases) for model downloads
@@ -315,6 +316,7 @@ var result = analyzer.Analyze("I love this!");
 
 ## 📚 Learn More
 
+- [Blog Post: SentimentAnalyzer v3.0 Modernization](https://arafattehsin.com/blog/sentiment-analyzer-modernization)
 - [Blog Post: On-device Machine Learning with SentimentAnalyzer](https://www.arafattehsin.com/blog/sentimentanalyzer-ondevice-machine-learning/)
 - [Sample Applications](./samples/) - Console, Blazor, MAUI examples
 - [CHANGELOG](CHANGELOG.md) - Version history and migration guides
